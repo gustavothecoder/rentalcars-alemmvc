@@ -25,7 +25,7 @@ feature 'User schedules rental' do
     click_on 'Agendar'
 
     expect(page).to have_css('h1', text: 'Locação de: Claudionor')
-    expect(page).to have_css('h3', text: 'Status: agendada')
+    expect(page).to have_css('h3', text: 'Status: Agendada')
     expect(page).to have_css('p', text: 'cro@email.com')
     expect(page).to have_css('p', text: '318.421.176-43')
     expect(page).to have_css('p', text: '04 de janeiro de 3000')
