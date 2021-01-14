@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
-module RentalsHelper
+class RentalPresenter < BasePresenter
+  def initialize(rental)
+    super(rental)
+  end
+
   RENTAL_STATUS = {
     'scheduled' => 'badge-success',
     'in_review' => 'badge-info',
@@ -8,7 +12,7 @@ module RentalsHelper
     'finalized' => 'badge-secondary'
   }.freeze
 
-  def status_label(rental)
-    content_tag(:span, t(rental.status).capitalize, class: "badge #{RENTAL_STATUS[rental.status]}")
+  def status_label
+    helpers.content_tag(:span, I18n.t(status).capitalize, class: "badge #{RENTAL_STATUS[status]}")
   end
 end
