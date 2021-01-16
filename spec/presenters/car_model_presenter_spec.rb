@@ -41,4 +41,22 @@ RSpec.describe CarModelPresenter, type: :presenter do
       end
     end
   end
+
+  describe 'options_list' do
+    context 'When the car has car options' do
+      it 'should return a <ul> with the car options' do
+        car_model = create(:car_model, car_options: 'gps, charger')
+        result = CarModelPresenter.new(car_model).options_list
+        expect(result).to eq('<ul><li>gps</li><li>charger</li></ul>')
+      end
+    end
+
+    context 'When the car has no car options' do
+      it 'should return a empty string' do
+        car_model = build(:car_model, car_options: ' ')
+        result = CarModelPresenter.new(car_model).options_list
+        expect(result).to eq('')
+      end
+    end
+  end
 end
