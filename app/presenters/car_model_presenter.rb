@@ -2,6 +2,7 @@
 
 class CarModelPresenter < BasePresenter
   include Rails.application.routes.url_helpers
+  delegate :content_tag, :concat, to: :helpers
 
   def initialize(car_model)
     super(car_model)
@@ -17,5 +18,15 @@ class CarModelPresenter < BasePresenter
     return rails_blob_url(photo) if photo.attached?
 
     'https://place-hold.it/100x100'
+  end
+
+  def options_list
+    return '' if car_options.strip.empty?
+
+    content_tag(:ul) do
+      car_options.split(',').each do |option|
+        concat(content_tag(:li, option.strip))
+      end
+    end
   end
 end
