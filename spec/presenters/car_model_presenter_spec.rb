@@ -21,4 +21,24 @@ RSpec.describe CarModelPresenter, type: :presenter do
       end
     end
   end
+
+  describe 'photo_url' do
+    context 'when the car model has a photo' do
+      it 'should return the car model photo_url' do
+        car_model = create(:car_model)
+        photo_path = Rails.root.join('spec/fixtures/150x150.png')
+        car_model.photo.attach(io: File.open(photo_path), filename: '150x150.png')
+        result = CarModelPresenter.new(car_model).photo_url
+        expect(result).to match(%r{\Ahttp://localhost/rails/active_storage/blobs/[\w\W]*/150x150.png\z})
+      end
+    end
+
+    context 'when the car model has no photo' do
+      it 'should return the default car model photo url' do
+        car_model = create(:car_model)
+        result = CarModelPresenter.new(car_model).photo_url
+        expect(result).to eq('https://place-hold.it/100x100')
+      end
+    end
+  end
 end
