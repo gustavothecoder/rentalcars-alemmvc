@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CarModelsController < ApplicationController
   before_action :authorize_admin
 
@@ -6,7 +8,8 @@ class CarModelsController < ApplicationController
   end
 
   def show
-    @car_model = CarModel.find(params[:id])
+    car_model = CarModel.find(params[:id])
+    @car_model = CarModelPresenter.new(car_model)
   end
 
   def new
@@ -46,9 +49,10 @@ class CarModelsController < ApplicationController
   end
 
   private
-  def car_model_params
-    params.require(:car_model).permit(%i[name year manufacture_id motorization
-    fuel_type_id category_id car_options photo])
-  end
 
+  def car_model_params
+    params.require(
+      :car_model
+    ).permit(%i[name year manufacture_id motorization fuel_type_id category_id car_options photo])
+  end
 end
